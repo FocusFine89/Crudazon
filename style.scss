@@ -1,0 +1,15 @@
+// dichiarazioni generali
+@import "_backoffice.scss";
+body {
+  font-family: monospace;
+}
+
+.card {
+  width: 18rem;
+}
+
+img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
