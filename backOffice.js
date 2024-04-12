@@ -14,16 +14,54 @@ window.onload = () => {
   const backOfficeImage = document.getElementById("Image-product");
   const backOfficePrice = document.getElementById("Price-product");
 
-  const product = {
-    name: backOfficeName.value,
-    description: backOfficeDesc.value,
-    brand: backOfficeBrand.value,
-    imageUrl: backOfficeImage.value,
-    price: backOfficePrice.value,
-  };
+  // const product = {
+  //   name: backOfficeName.value,
+  //   description: backOfficeDesc.value,
+  //   brand: backOfficeBrand.value,
+  //   imageUrl: backOfficeImage.value,
+  //   price: backOfficePrice.value,
+  // };
 
   if (idUrl) {
     btnAdd.innerText = "Modifica";
+    const btnDelete = document.createElement("button");
+    btnDelete.classList.add("btn", "btn-danger");
+    btnDelete.setAttribute("type", "button");
+    btnDelete.setAttribute("id", "btn-delete");
+    btnDelete.innerText = "Elimina";
+    backOfficeForm.appendChild(btnDelete);
+
+    // funzione delete del bottone
+    btnDelete.onclick = () => {
+      fetch(URL_API, {
+        method: "DELETE",
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZTk0MzdmMzA0NjAwMWFlNTlmNjYiLCJpYXQiOjE3MTI5MDg2MTEsImV4cCI6MTcxNDExODIxMX0._qhUGyQCPTYJBz-vGikhqtIxwlnBNkOJNTHZ-rILP28",
+        },
+      });
+    };
+    // fine funzione delete del bottone
+
+    // codice di visualizazzione campi
+    fetch(URL_API, {
+      method: "GET",
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZTk0MzdmMzA0NjAwMWFlNTlmNjYiLCJpYXQiOjE3MTI5MDg2MTEsImV4cCI6MTcxNDExODIxMX0._qhUGyQCPTYJBz-vGikhqtIxwlnBNkOJNTHZ-rILP28",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        backOfficeName.value = data.name;
+        backOfficeDesc.value = data.description;
+        backOfficeBrand.value = data.brand;
+        backOfficeImage.value = data.imageUrl;
+        backOfficePrice.value = data.price;
+      });
+    // fine codice visualizzazione campi
     backOfficeForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const product = {
